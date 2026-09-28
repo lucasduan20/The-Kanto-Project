@@ -9,3 +9,7 @@
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;scroll-behavior:auto!important}}
 @media(min-width:701px){.menu-toggle{display:none}}
 h1{letter-spacing:-.035em}h1 em{letter-spacing:-.045em}h2{letter-spacing:-.035em}@media(max-width:700px){h1{font-size:clamp(45px,9.5vw,66px);letter-spacing:-.045em}h1 em{letter-spacing:-.05em}}
+/* CSS-drawn diagonal arrow avoids emoji glyphs on mobile */
+.arrow{position:relative;display:inline-block;width:.8em;height:.8em;flex:0 0 .8em}
+.arrow::before{content:'';position:absolute;left:.06em;bottom:.16em;width:.72em;height:1px;background:currentColor;transform:rotate(-45deg);transform-origin:left center}
+.arrow::after{content:'';position:absolute;right:0;top:.04em;width:.38em;height:.38em;border-top:1px solid currentColor;border-right:1px solid currentColor}
