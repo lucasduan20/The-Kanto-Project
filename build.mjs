@@ -1,7 +1,7 @@
 import { mkdir, writeFile, copyFile, access } from 'node:fs/promises';
 import c from './content.mjs';
 const esc = (s) => String(s).replace(/[&<>"']/g, x => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]));
-const lines = s => esc(s).replace(/\n/g, '<br>');
+const lines = s => esc(s).replace(/\n/g, '<br> ');
 const link = (url) => { if (!/^(https:\/\/|mailto:|#|\/)/.test(url) || url.startsWith('//')) throw new Error('Use an https, mailto, anchor, or local URL: '+url); return esc(url); };
 const arrow = '<span aria-hidden="true">↗</span>';
 const nav = c.navigation.map(n => `<a href="#${esc(n.id)}"${n.id==='get-involved'?' class="nav-action"':''}>${esc(n.label)}${n.id==='get-involved'?arrow:''}</a>`).join('');
