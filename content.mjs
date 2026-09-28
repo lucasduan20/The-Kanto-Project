@@ -2,13 +2,31 @@
 export default {
   name: 'The Kanto Project',
   meta: { title: 'The Kanto Project — A new home for the cards you love', description: 'A student-founded nonprofit sharing the joy of Pokémon cards with children through card donations and community outreach.' },
-  navigation: [{ label: 'Our Story', id: 'our-story' }, { label: 'In Pictures', id: 'in-pictures' }, { label: 'Get Involved', id: 'get-involved' }, { label: 'Say Hello', id: 'say-hello' }],
+  navigation: [{ label: 'Our Story', id: 'our-story' }, { label: 'In Pictures', id: 'in-pictures' }, { label: 'Get Involved', id: 'get-involved' }],
   accessibility: { skip: 'Skip to content', home: 'The Kanto Project — home', menu: 'Menu', closeMenu: 'Close', navigation: 'Main navigation', openPhoto: 'Open photo', closePhoto: 'Close photo', previousPhoto: 'Previous photo', nextPhoto: 'Next photo', photoDialog: 'Project photo journal' },
   hero: { eyebrow: 'A shared love. A new beginning.', lines: ['A new home for', 'the cards you love.'], description: 'We’re a student-founded nonprofit sharing the joy of Pokémon cards with children through card donations and community outreach.', primary: 'Give cards', secondary: 'Meet the project', footnote: 'For the love of collecting. For the joy of giving.' },
   story: { label: '01 / Our Story', heading: 'The best part of collecting?\nSharing it.', paragraphs: ['A favorite card can be the start of something special. The Kanto Project grew from a love of collecting and a simple idea: that joy is even better when it’s shared.', 'We collect Pokémon cards and share them with children, giving the cards we love a chance to become someone else’s favorite. Through card donations and community outreach, we’re bringing a little of that excitement to a new collection.'], milestone: 'Our work includes a completed card donation to Cool Kids Campaign.' },
-  impact: { value: '15,000', label: 'cards donated', asOf: 'As of August 2026' },
+  impact: { value: '25,000', label: 'cards donated so far', asOf: '' },
   gallery: { label: '02 / In Pictures', heading: 'Little moments.\nLasting favorites.', empty: 'Photos from our next chapter will appear here.', images: [] },
-  involvement: { label: '03 / Get Involved', heading: 'Make room for someone\nelse’s collection.', cards: { title: 'Give cards', description: 'Let the cards you’ve loved become part of another child’s collection.', pending: 'Collection details will be posted here.', details: '', url: '', action: 'Arrange a card donation' }, financial: { title: 'Support the project', description: 'Help us keep sharing the joy of Pokémon cards with children.', pending: 'Online giving details coming soon', url: '', action: 'Support the project financially' } },
-  contact: { label: '04 / Say Hello', heading: 'Good things start\nwith a hello.', description: 'A collector with cards to share? An organization interested in our work? Or just someone who’d like to help? We’d love to hear from you.', pending: 'Contact details coming soon', email: '', socials: [] },
+  contact: {
+    label: '03 / Get Involved', heading: 'Good things start\nwith a hello.',
+    description: 'Want to give cards, support the project, or work together? Send us a message. We’d love to hear from you.',
+    email: 'contact@thekantoproject.org',
+    socials: [{ label: '@thekantoproject', url: 'https://www.instagram.com/thekantoproject/', platform: 'Instagram' }],
+    emailLead: 'Or email', socialLead: 'Or DM', socialSuffix: 'on Instagram',
+    form: {
+      action: 'https://formsubmit.co/contact@thekantoproject.org',
+      endpoint: 'https://formsubmit.co/ajax/contact@thekantoproject.org',
+      subject: 'New message — The Kanto Project',
+      nameLabel: 'Your name', emailLabel: 'Your email', messageLabel: 'Your message',
+      messagePlaceholder: 'Tell us a little about how you’d like to get involved…',
+      requiredNote: 'All fields are required.', submit: 'Send message', sending: 'Sending…',
+      success: 'Your message has been submitted. Thank you for getting in touch!',
+      error: 'We couldn’t confirm your message was sent. Your text is still here. Please try again, or email us directly below.',
+      inactive: 'The message form isn’t ready to receive messages yet. Please email us directly below.',
+      invalid: 'Please complete all fields and enter a valid email address.',
+      providerNote: 'Messages are processed by', providerName: 'FormSubmit', providerUrl: 'https://formsubmit.co/'
+    }
+  },
   footer: { mission: 'Giving the cards we love a chance to become someone else’s favorite.', designation: 'An approved 501(c)(3) nonprofit.', backToTop: 'Back to top', copyrightYear: 2026 }
 };

@@ -17,6 +17,59 @@ document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click
   const target = document.querySelector(a.getAttribute('href'));
   if(target && target.id !== 'top') { target.setAttribute('tabindex','-1'); target.focus({preventScroll:true}); }
 }));
+const messageForm = document.querySelector('#contact-form');
+if (messageForm) {
+  const status = document.querySelector('#form-status');
+  const submit = messageForm.querySelector('button[type="submit"]');
+  const submitLabel = submit.querySelector('.submit-label');
+  let sending = false;
+  const showStatus = (kind) => {
+    status.hidden = false;
+    status.textContent = messageForm.dataset[kind];
+    status.dataset.state = kind;
+    status.focus({preventScroll:true});
+  };
+  messageForm.addEventListener('submit', async event => {
+    event.preventDefault();
+    if (sending) return;
+    const fields = ['name','email','message'].map(name => messageForm.elements.namedItem(name));
+    fields.forEach(field => { field.value = field.value.trim(); });
+    if (!messageForm.reportValidity()) { showStatus('invalid'); return; }
+    if (messageForm.elements.namedItem('_honey').value) { showStatus('error'); return; }
+    sending = true;
+    fields.forEach(field => { field.readOnly = true; });
+    submit.disabled = true;
+    messageForm.setAttribute('aria-busy','true');
+    submitLabel.textContent = messageForm.dataset.sending;
+    status.hidden = true;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 20000);
+    try {
+      const response = await fetch(messageForm.dataset.endpoint, {
+        method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'},
+        body:JSON.stringify(Object.fromEntries(new FormData(messageForm))), signal:controller.signal
+      });
+      const payload = await response.json();
+      const kind = classifyFormResponse(response.ok, payload);
+      if (kind === 'success') messageForm.reset();
+      showStatus(kind);
+    } catch { showStatus('error'); }
+    finally {
+      clearTimeout(timeout);
+      sending = false;
+      fields.forEach(field => { field.readOnly = false; });
+      submit.disabled = false;
+      messageForm.removeAttribute('aria-busy');
+      submitLabel.textContent = messageForm.dataset.submit;
+    }
+  });
+}
+
+// Accept a genuine provider acknowledgement, never a successful HTTP status alone.
+function classifyFormResponse(ok, payload) {
+  if (/activat|confirm.*email|verify.*email/i.test(String(payload?.message ?? ''))) return 'inactive';
+  return ok && (payload?.success === true || payload?.success === 'true') ? 'success' : 'error';
+}
 const dialog = document.querySelector('.lightbox');
 if (dialog) {
   const photos = JSON.parse(document.querySelector('#gallery-data').textContent);
