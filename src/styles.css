@@ -11,4 +11,4 @@
 h1{letter-spacing:-.035em}h1 em{letter-spacing:-.045em}h2{letter-spacing:-.035em}@media(max-width:700px){h1{font-size:clamp(45px,9.5vw,66px);letter-spacing:-.045em}h1 em{letter-spacing:-.05em}}
 /* Inline SVG keeps the original thin arrow shape without emoji glyph substitution. */
 .arrow{display:inline-block;width:1em;height:1em;flex:0 0 1em;vertical-align:middle;overflow:visible}
-.button .arrow{width:1.4em;height:1.4em;flex-basis:1.4em}
+.button .arrow{width:1.1em;height:1.1em;flex-basis:1.1em}
