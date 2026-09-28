@@ -19,4 +19,7 @@ assert.match(html,/https:\/\/formsubmit.co\/ajax\/contact@thekantoproject.org/);
 assert.match(html,/mailto:contact@thekantoproject.org/);
 assert.match(html,/https:\/\/www.instagram.com\/thekantoproject\//);
 assert.equal((html.match(/<form /g)||[]).length,1);
+const photos=await readFile('dist/photos.html','utf8');
+assert.match(html,/href="photos\.html"[^>]*>View our photo album/);
+assert.match(photos,/Our photo album/);assert.match(photos,/This album is empty for now/);assert.match(photos,/index\.html#in-pictures/);
 console.log('Contact response handling, merged section, impact, and destinations passed.');
