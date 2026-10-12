@@ -1,6 +1,5 @@
 document.documentElement.classList.add('js');
 const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
-const motionButton = document.querySelector('.motion-toggle');
 const revealTargets = document.querySelectorAll('.story-copy,.impact,.pictures-intro,.message-intro,.message-column,.photo-page-empty');
 let motionPaused = motionPreference.matches;
 let scrollFrame = 0;
@@ -9,20 +8,10 @@ const renderScroll = () => {
   const max = document.documentElement.scrollHeight - innerHeight;
   document.documentElement.style.setProperty('--progress', String(max > 0 ? scrollY / max : 0));
   document.documentElement.style.setProperty('--mew-y', motionPaused ? '0px' : `${Math.min(scrollY * .08, 200)}px`);
-  const art = document.querySelector('.card-art');
-  if (art) {
-    const position = art.getBoundingClientRect().top;
-    art.style.setProperty('--card-turn', motionPaused ? '0deg' : `${Math.max(-5, Math.min(7, (innerHeight / 2 - position) / 55))}deg`);
-  }
 };
 const updateMotion = () => {
   document.documentElement.classList.toggle('motion-enabled', !motionPaused);
   document.documentElement.classList.toggle('motion-off', motionPaused);
-  if (motionButton) {
-    motionButton.hidden = false;
-    motionButton.textContent = motionPaused ? 'Enable motion' : 'Pause motion';
-    motionButton.setAttribute('aria-pressed', String(motionPaused));
-  }
   renderScroll();
 };
 if ('IntersectionObserver' in window) {
@@ -31,7 +20,6 @@ if ('IntersectionObserver' in window) {
   }), {threshold: .12});
   revealTargets.forEach(target => { target.classList.add('reveal'); revealObserver.observe(target); });
 }
-motionButton?.addEventListener('click', () => { motionPaused = !motionPaused; updateMotion(); });
 motionPreference.addEventListener('change', event => { motionPaused = event.matches; updateMotion(); });
 addEventListener('scroll', () => { if (!scrollFrame) scrollFrame = requestAnimationFrame(renderScroll); }, {passive:true});
 addEventListener('resize', renderScroll);
