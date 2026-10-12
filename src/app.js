@@ -117,7 +117,6 @@ if (dialog) {
     current = (index + photos.length) % photos.length;
     const item = photos[current];
     photo.src = item.src; photo.alt = item.alt; photo.width = item.width; photo.height = item.height;
-    dialog.querySelector('.lightbox-caption').textContent = item.caption;
     dialog.querySelector('.photo-count').textContent = `${current + 1} / ${photos.length}`;
   };
   document.querySelectorAll('.photo-trigger').forEach(button => button.addEventListener('click', () => { opener=button; show(Number(button.dataset.photo)); dialog.showModal(); dialog.querySelector('.close-photo').focus(); }));
