@@ -21,5 +21,7 @@ assert.match(html,/https:\/\/www.instagram.com\/thekantoproject\//);
 assert.equal((html.match(/<form /g)||[]).length,1);
 const photos=await readFile('dist/photos.html','utf8');
 assert.match(html,/href="photos\.html"[^>]*>View our photo album/);
-assert.match(photos,/Our photo album/);assert.match(photos,/This album is empty for now/);assert.match(photos,/index\.html#in-pictures/);
+assert.match(photos,/Our photo album/);assert.doesNotMatch(photos,/This album is empty for now/);assert.match(photos,/index\.html#in-pictures/);
+assert.equal((photos.match(/class="photo-trigger"/g)||[]).length,9);
+assert.match(photos,/<dialog class="lightbox"/);assert.doesNotMatch(html,/class="photo-trigger"/);
 console.log('Contact response handling, merged section, impact, and destinations passed.');
