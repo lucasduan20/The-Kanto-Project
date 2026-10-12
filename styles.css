@@ -21,7 +21,7 @@ h1{letter-spacing:-.035em}h1 em{letter-spacing:-.045em}h2{letter-spacing:-.035em
 
 /* Kanto: an atmospheric, impact-first collector community. */
 :root{--paper:#120e1c;--ink:#faf3ff;--muted:#c4b8ce;--accent:#efb5db;--accent-hover:#ffd4ed;--blush:#21182e;--line:#ffffff26;--serif:'DM Sans',sans-serif;--header-height:86px;--section-space:130px}
-html{scroll-behavior:smooth}body{background:var(--paper);isolation:isolate}main,.site-footer,::selection{background:#efb5db;color:#21182e}
+html{scroll-behavior:smooth}body{background:var(--paper);isolation:isolate}main,.site-footer{position:relative}::selection{background:#efb5db;color:#21182e}
 .atmosphere{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;background:var(--paper)}
 
 .mew-background{position:absolute;width:clamp(260px,38vw,550px);height:auto;right:2%;top:23%;opacity:.09;filter:grayscale(.25);transform:translateY(var(--mew-y,0px)) rotate(-12deg);image-rendering:auto}
