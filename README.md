@@ -19,7 +19,7 @@ Contact configuration:
 Remaining content to supply:
 - `gallery.images`: authentic project photographs with `src`, `alt`, `caption`, `width`, and `height`. Put optimized files in `dist/assets/photos` and use URLs such as `/assets/photos/filename.webp`. Only publish photos with appropriate permission. The gallery and keyboard-accessible lightbox appear automatically when entries are added.
 
-`impact.value`, `impact.label`, `impact.asOf`, `story.milestone`, and `footer.designation` hold the supplied impact and nonprofit facts. The user updated the figure to 25,000 cards donated so far; the earlier August 2026 date has been removed. The figure is manually maintained, never an animated/live counter. An optional `impact.asOf` is shown only when provided. `footer.copyrightYear` is editable.
+`impact.value`, `impact.label`, `impact.asOf`, `story.milestone`, and `footer.designation` hold the supplied impact and nonprofit facts. The current figure is 85,100 cards donated so far. The figure is manually maintained, never an animated/live counter. An optional `impact.asOf` is shown only when provided. `footer.copyrightYear` is editable.
 
 ## Design and assets
 
