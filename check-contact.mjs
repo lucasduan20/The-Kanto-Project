@@ -16,7 +16,7 @@ const html=await readFile('dist/index.html','utf8');
 assert.match(html,/85,100/);assert.doesNotMatch(html,/15,000|25,000|55,000|As of August 2026|04 \/ Say Hello|A shared love\. A new beginning|For the love of collecting|Our work includes a completed card donation|the cards you love/);
 assert.match(html,/We’re a student-founded nonprofit \(official 501\(c\)\(3\)\) bringing the joy of Pokémon cards to underprivileged and hospitalized children through donations and community outreach!/);
 assert.match(html,/A new home for/);assert.match(html,/the bulk you don’t want/);
-assert.match(html,/https:\/\/formsubmit.co\/ajax\/contact@thekantoproject.org/);
+assert.match(html,/https:\/\/formsubmit.co\/ajax\/lucasduan20@gmail\.com/);
 assert.match(html,/mailto:contact@thekantoproject.org/);
 assert.match(html,/https:\/\/www.instagram.com\/thekantoproject\//);
 assert.equal((html.match(/<form /g)||[]).length,1);

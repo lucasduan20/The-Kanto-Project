@@ -79,8 +79,8 @@ export default {
     socials: [{ label: '@thekantoproject', url: 'https://www.instagram.com/thekantoproject/', platform: 'Instagram' }],
     emailLead: 'Or email', socialLead: 'Or DM', socialSuffix: 'on Instagram',
     form: {
-      action: 'https://formsubmit.co/contact@thekantoproject.org',
-      endpoint: 'https://formsubmit.co/ajax/contact@thekantoproject.org',
+      action: 'https://formsubmit.co/lucasduan20@gmail.com',
+      endpoint: 'https://formsubmit.co/ajax/lucasduan20@gmail.com',
       subject: 'New message — The Kanto Project',
       nameLabel: 'Your name', emailLabel: 'Your email', messageLabel: 'Your message',
       messagePlaceholder: 'Tell us a little about how you’d like to get involved…',
