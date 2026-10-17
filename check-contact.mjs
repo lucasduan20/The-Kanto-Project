@@ -51,7 +51,7 @@ assert.match(photos,/href="\/#in-pictures"/);
 assert.doesNotMatch(`${html}\n${photos}`,/href="[^"]*\.html"/);
 assert.doesNotMatch(`${html}\n${photos}`,/github\.io/i);
 await assert.rejects(readFile('dist/photos.html','utf8'),{code:'ENOENT'});
-assert.match(await readFile('dist/_redirects','utf8'),/^\/photos\.html \/photos\/ 301$/);
+assert.equal((await readFile('dist/_redirects','utf8')).trim(),'/photos.html /photos/ 301');
 assert.equal((photos.match(/class="photo-trigger"/g)||[]).length,9);
 assert.match(photos,/<dialog class="lightbox"/);
 assert.doesNotMatch(html,/class="photo-trigger"/);
