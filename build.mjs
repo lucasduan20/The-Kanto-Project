@@ -3,6 +3,31 @@ import c from './content.mjs';
 const esc = (s) => String(s).replace(/[&<>"']/g, x => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]));
 const lines = s => esc(s).replace(/\n/g, '<br> ');
 const link = (url) => { if (!/^(https:\/\/|mailto:|#|\/|[A-Za-z0-9_.-]+\/)/.test(url) || url.startsWith('//')) throw new Error('Use an https, mailto, anchor, or local URL: '+url); return esc(url); };
+const siteUrl = 'https://thekantoproject.org';
+const organizationId = `${siteUrl}/#organization`;
+const structuredData = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'NGO',
+      '@id': organizationId,
+      name: c.name,
+      url: `${siteUrl}/`,
+      description: 'The Kanto Project is a 501(c)(3) nonprofit donating Pokémon card packs to underprivileged and hospitalized children through community outreach.',
+      nonprofitStatus: 'https://schema.org/Nonprofit501c3',
+      email: c.contact.email,
+      logo: `${siteUrl}/assets/kanto-logo.png`,
+      sameAs: c.contact.socials.map(s => s.url)
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${siteUrl}/#website`,
+      name: c.name,
+      url: `${siteUrl}/`,
+      publisher: { '@id': organizationId }
+    }
+  ]
+}).replace(/</g, '\\u003c');
 const arrow = '<svg class="arrow" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M2 18 18 2M8 2h10v10" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="square" stroke-linejoin="miter"/></svg>';
 const nav = c.navigation.map(n => `<a href="${n.id==='in-pictures'?'/photos/':`/#${esc(n.id)}`}"${n.id==='get-involved'?' class="nav-action"':''}>${esc(n.label)}${n.id==='get-involved'?arrow:''}</a>`).join('');
 const photoNav = c.navigation.map(n => `<a href="${n.id==='in-pictures'?'/photos/':`/#${esc(n.id)}`}"${n.id==='get-involved'?' class="nav-action"':''}>${esc(n.label)}${n.id==='get-involved'?arrow:''}</a>`).join('');
@@ -20,7 +45,7 @@ const contactForm = `<form id="contact-form" class="message-form" action="${link
 const atmosphere = `<div class="atmosphere" aria-hidden="true"><img class="mew-background" src="/assets/mew.gif" alt="" width="360" height="360"></div><div class="scroll-progress" aria-hidden="true"></div>`;
 const albumDialog = c.gallery.images.length?`<dialog class="lightbox" aria-label="${esc(c.accessibility.photoDialog)}"><div class="lightbox-toolbar"><span class="photo-count" aria-live="polite"></span><button class="close-photo" aria-label="${esc(c.accessibility.closePhoto)}">${esc(c.accessibility.closeMenu)} ×</button></div><figure><img class="lightbox-image" alt=""></figure><div class="lightbox-controls"><button class="previous-photo" aria-label="${esc(c.accessibility.previousPhoto)}">←</button><button class="next-photo" aria-label="${esc(c.accessibility.nextPhoto)}">→</button></div></dialog><script type="application/json" id="gallery-data">${JSON.stringify(c.gallery.images).replace(/</g,'\\u003c')}</script>`:'';
 const html = `<!doctype html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#120e1c"><title>${esc(c.meta.title)}</title><meta name="description" content="${esc(c.meta.description)}"><meta property="og:title" content="${esc(c.meta.title)}"><meta property="og:description" content="${esc(c.meta.description)}"><meta property="og:type" content="website"><link rel="canonical" href="/"><link rel="icon" type="image/png" href="/assets/kanto-logo.png"><link rel="preload" href="/assets/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/dm-sans.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/styles.css?v=album2"><script src="/app.js?v=album2" defer></script></head>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#120e1c"><title>${esc(c.meta.title)}</title><meta name="description" content="${esc(c.meta.description)}"><meta property="og:title" content="${esc(c.meta.title)}"><meta property="og:description" content="${esc(c.meta.description)}"><meta property="og:type" content="website"><meta property="og:url" content="${siteUrl}/"><link rel="canonical" href="${siteUrl}/"><link rel="icon" type="image/png" href="/assets/kanto-logo.png"><link rel="preload" href="/assets/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/dm-sans.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/styles.css?v=album2"><script type="application/ld+json">${structuredData}</script><script src="/app.js?v=album2" defer></script></head>
 <body id="top">${atmosphere}<a class="skip-link" href="#main">${esc(c.accessibility.skip)}</a>
 <header class="site-header"><div class="header-inner wrap"><a class="brand" href="/#top" aria-label="${esc(c.accessibility.home)}"><img src="/assets/kanto-logo.png" width="500" height="500" alt="${esc(c.name)}" fetchpriority="high"></a><button class="menu-toggle" aria-expanded="false" aria-controls="main-nav" data-open="${esc(c.accessibility.menu)}" data-close="${esc(c.accessibility.closeMenu)}" hidden>${esc(c.accessibility.menu)} <span aria-hidden="true">+</span></button><nav id="main-nav" aria-label="${esc(c.accessibility.navigation)}">${nav}</nav></div></header>
 <main id="main"><section class="hero wrap" aria-labelledby="hero-heading"><div class="hero-impact"><p class="hero-count" aria-label="${esc(c.impact.value)} ${esc(c.impact.label)}"><span data-count="${esc(c.impact.value.replaceAll(',',''))}" aria-hidden="true">${esc(c.impact.value)}</span></p><p class="count-caption">CARDS DONATED SO FAR</p></div><h1 id="hero-heading"><span>A new home for</span> <em>the bulk you don’t want.</em></h1><p class="hero-description">${esc(c.hero.description)}</p><div class="hero-actions"><a class="button" href="/#get-involved">Give cards ${arrow}</a><a class="text-link" href="/#our-story">Discover our story <span aria-hidden="true">↓</span></a></div></section>
@@ -32,7 +57,7 @@ const html = `<!doctype html>
 
 </body></html>`;
 const photoHtml = `<!doctype html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#120e1c"><title>${esc(c.name)} — ${esc(c.gallery.pageTitle)}</title><meta name="description" content="Photos of The Kanto Project’s card donations, preparation, and community outreach."><link rel="canonical" href="/photos/"><link rel="icon" type="image/png" href="/assets/kanto-logo.png"><link rel="preload" href="/assets/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/dm-sans.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/styles.css?v=album2"><script src="/app.js?v=album2" defer></script></head>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#120e1c"><title>${esc(c.name)} — ${esc(c.gallery.pageTitle)}</title><meta name="description" content="Photos of The Kanto Project’s Pokémon card donation packs and community outreach."><meta property="og:title" content="${esc(c.name)} — ${esc(c.gallery.pageTitle)}"><meta property="og:description" content="Photos of The Kanto Project’s Pokémon card donation packs and community outreach."><meta property="og:type" content="website"><meta property="og:url" content="${siteUrl}/photos/"><link rel="canonical" href="${siteUrl}/photos/"><link rel="icon" type="image/png" href="/assets/kanto-logo.png"><link rel="preload" href="/assets/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/dm-sans.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/styles.css?v=album2"><script src="/app.js?v=album2" defer></script></head>
 <body id="top">${atmosphere}<a class="skip-link" href="/#main">${esc(c.accessibility.skip)}</a><header class="site-header"><div class="header-inner wrap"><a class="brand" href="/#top" aria-label="${esc(c.accessibility.home)}"><img src="/assets/kanto-logo.png" width="500" height="500" alt="${esc(c.name)}" fetchpriority="high"></a><button class="menu-toggle" aria-expanded="false" aria-controls="main-nav" data-open="${esc(c.accessibility.menu)}" data-close="${esc(c.accessibility.closeMenu)}" hidden>${esc(c.accessibility.menu)} <span aria-hidden="true">+</span></button><nav id="main-nav" aria-label="${esc(c.accessibility.navigation)}">${photoNav}</nav></div></header>
 <main id="main" class="photo-page-main"><section class="photo-page wrap" aria-labelledby="photo-page-heading"><div class="section-label">${esc(c.gallery.label)}</div><div class="photo-page-heading"><h1 id="photo-page-heading">${esc(c.gallery.pageTitle)}</h1><a class="text-link" href="/#in-pictures">← ${esc(c.gallery.backButton)}</a></div>${gallery}</section></main>
 <footer class="site-footer"><div class="wrap"><div class="footer-top"><div><p class="footer-name">${esc(c.name)}</p><p class="footer-mission">${esc(c.footer.mission)}</p></div><div class="footer-links">${socials}<a href="/#top" class="back-top">${esc(c.footer.backToTop)} <span aria-hidden="true">↑</span></a></div></div><div class="footer-bottom"><p>© ${c.footer.copyrightYear} ${esc(c.name)}</p><p>${esc(c.footer.designation)}</p></div></div></footer>${albumDialog}</body></html>`;
