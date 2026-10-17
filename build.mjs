@@ -63,11 +63,12 @@ const photoHtml = `<!doctype html>
 <footer class="site-footer"><div class="wrap"><div class="footer-top"><div><p class="footer-name">${esc(c.name)}</p><p class="footer-mission">${esc(c.footer.mission)}</p></div><div class="footer-links">${socials}<a href="/#top" class="back-top">${esc(c.footer.backToTop)} <span aria-hidden="true">↑</span></a></div></div><div class="footer-bottom"><p>© ${c.footer.copyrightYear} ${esc(c.name)}</p><p>${esc(c.footer.designation)}</p></div></div></footer>${albumDialog}</body></html>`;
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>https://thekantoproject.org/</loc></url>\n  <url><loc>https://thekantoproject.org/photos/</loc></url>\n</urlset>\n`;
 const robots = `User-agent: *\nAllow: /\nSitemap: https://thekantoproject.org/sitemap.xml\n`;
+const redirects = `/photos.html /photos/ 301\n`;
 await mkdir('dist', {recursive:true});
 await cp('assets','dist/assets',{recursive:true});
 const styles = await Promise.all(['src/styles.css','src/contact.css','src/revamp.css','src/album.css'].map(p=>readFile(p,'utf8')));
 await mkdir('dist/photos', {recursive:true});
 await mkdir('photos', {recursive:true});
-await Promise.all([writeFile('dist/index.html',html),writeFile('dist/photos/index.html',photoHtml),writeFile('dist/sitemap.xml',sitemap),writeFile('dist/robots.txt',robots),writeFile('index.html',html),writeFile('photos/index.html',photoHtml),writeFile('sitemap.xml',sitemap),writeFile('robots.txt',robots),writeFile('dist/styles.css',styles.join('\n')),writeFile('styles.css',styles.join('\n')),copyFile('src/app.js','dist/app.js'),copyFile('src/app.js','app.js'),copyFile('CNAME','dist/CNAME')]);
+await Promise.all([writeFile('dist/index.html',html),writeFile('dist/photos/index.html',photoHtml),writeFile('dist/sitemap.xml',sitemap),writeFile('dist/robots.txt',robots),writeFile('dist/_redirects',redirects),writeFile('index.html',html),writeFile('photos/index.html',photoHtml),writeFile('sitemap.xml',sitemap),writeFile('robots.txt',robots),writeFile('_redirects',redirects),writeFile('dist/styles.css',styles.join('\n')),writeFile('styles.css',styles.join('\n')),copyFile('src/app.js','dist/app.js'),copyFile('src/app.js','app.js'),copyFile('CNAME','dist/CNAME')]);
 for(const path of ['dist/assets/kanto-logo.png','dist/assets/fonts/fraunces.woff2','dist/assets/fonts/fraunces-italic.woff2','dist/assets/fonts/dm-sans.woff2']) await access(path);
 console.log('Built The Kanto Project: static HTML, CSS, and JavaScript.');
