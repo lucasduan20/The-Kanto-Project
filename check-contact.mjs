@@ -25,7 +25,7 @@ assert.match(html,/href="\/photos\/"[^>]*>In Pictures/);
 assert.match(html,/href="\/photos\/"[^>]*>View our photo album/);
 assert.match(photos,/Our photo album/);assert.doesNotMatch(photos,/This album is empty for now/);assert.match(photos,/href="\/#in-pictures"/);
 assert.doesNotMatch(`${html}\n${photos}`,/href="[^"]*\.html/);
-assert.match(await readFile('dist/photos.html','utf8'),/location\.replace\('\/photos\/'\)/);
+await assert.rejects(readFile('dist/photos.html','utf8'),{code:'ENOENT'});
 assert.equal((photos.match(/class="photo-trigger"/g)||[]).length,9);
 assert.match(photos,/<dialog class="lightbox"/);assert.doesNotMatch(html,/class="photo-trigger"/);
 console.log('Contact response handling, merged section, impact, and destinations passed.');
